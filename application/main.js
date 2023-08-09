@@ -1,34 +1,44 @@
 "use strict";
 // ----------------------------------------------------------------
-const hiddenNemo = "fvgybuhnemofgbhnj";
-function findNemo(text) {
-  const index = text.indexOf("nemo");
-  if (index !== -1) {
-    return `Nemo found at index ${index}.`;
-  } else {
-    return "Nemo not found.";
+function main() {
+  const number1 = getNumber();
+  const number2 = getNumber();
+  const symbol = prompt("Please enter symbol (+ - * /)");
+
+  switch (symbol) {
+    case "+":
+      alert(number1 + number2);
+      break;
+    case "-":
+      alert(number1 - number2);
+      break;
+    case "*":
+      alert(number1 * number2);
+      break;
+    case "/":
+      alert(number1 / number2);
+      break;
+
+    default:
+      alert("Error, you are 404");
+      break;
+  }
+
+  function isInvalid(number) {
+    return isNaN(number);
+  }
+  function getNumber() {
+    let isRunning = true;
+
+    while (isRunning) {
+      const number = +prompt("Enter number!");
+      isRunning = isInvalid(number);
+      if (!isRunning) return number;
+      if (isRunning) {
+        alert("Please enter numbers");
+      }
+    }
   }
 }
 
-console.log(findNemo(hiddenNemo));
-// ----------------------------------------------------------------
-const nemo = {
-  firstName: {
-    surname: {
-      text: {
-        msg: "nemo",
-      },
-    },
-  },
-};
-
-console.log(nemo.firstName.surname.text.msg);
-// ----------------------------------------------------------------
-
-const arr = ["not nemo", "not nemo", "nemo", "not nemo", "not nemo", "nemo"];
-
-for (let i = 0; i < arr.length; i++) {
-  const nemo = arr[i];
-  if (nemo === "nemo") console.log(nemo);
-}
-// ---------------------------------------------------------------
+main();
