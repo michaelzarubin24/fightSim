@@ -1,100 +1,62 @@
 "use strict";
-// ----------------------------------------------------------------
-alert("Welcome!");
-let isArray = Array.isArray;
-const extractData = (people, tag) => {
-  if (isArray(people)) {
-    let sum = 0;
-    for (const person of people) {
-      const value = person[tag];
-      sum += value;
+
+// 1. Find form---------------------------------------------------------------------------------------------
+let form = document.querySelector("form");
+console.log(["find form"], form);
+
+// 2. Print every child of form to console------------------------------------------------------------------
+let inputFirstName = document.getElementsByName("name")[0];
+console.log(["direct input call"], inputFirstName);
+const kekInput = document.getElementById("kek");
+console.log(["direct kekinput call"], kekInput);
+const select = document.querySelector("select");
+console.log(["direct select call"], select);
+const button = document.getElementById("btn");
+console.log(["direct button call"], button);
+
+// 3. Find inputs without direct calls----------------------------------------------------------------------
+console.log(["find using children"], form.children[0], form.children[1]);
+
+// 4, 5, 7 Validation---------------------------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("form");
+  const nameInput = document.querySelector('input[name="name"]');
+  const surnameInput = document.querySelector('input[name="surname"]');
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    const nameValue = nameInput.value.trim();
+    const surnameValue = surnameInput.value.trim();
+
+    if (nameValue.length > 4 && surnameValue.length > 5) {
+      // Validation successful
+      // nameInput.style.background && surnameInput.style.background = "lightblue"; ?????????????
+      nameInput.style.background = "lightblue";
+      surnameInput.style.background = "lightblue";
+      alert("Validation successful! Congratulations!");
+    } else {
+      // Validation failed
+      if (nameValue.length <= 4) {
+        nameInput.style.background = "red";
+        console.log(
+          ["Name validation failed"],
+          "Name must have more than 4 characters."
+        );
+        nameInput.focus();
+      }
+      if (surnameValue.length <= 5) {
+        surnameInput.style.background = "red";
+        console.log(
+          ["Surname validation failed"],
+          "Surname must have more than 5 characters."
+        );
+        surnameInput.focus();
+      }
     }
-    console.log(sum);
-    return sum;
-  }
-};
-const BUDGET_BY_DEFAULT = 20000;
-
-const IT_STEP_ACADEMY = {
-  budget: BUDGET_BY_DEFAULT,
-  teachers: [
-    {
-      id: "000001",
-      name: "Albert",
-      surname: "Einstein",
-      income: 3000,
-    },
-    {
-      id: "000002",
-      name: "Nicola",
-      surname: "Tesla",
-      income: 4000,
-    },
-    {
-      id: "000003",
-      name: "Steve",
-      surname: "Jobs",
-      income: 2000,
-    },
-    {
-      id: "000004",
-      name: "Robert",
-      surname: "Oppenheimer",
-      income: 8000,
-    },
-  ],
-
-  students: [
-    {
-      id: "100001",
-      name: "Michael",
-      surname: "Zarubin",
-      outcome: 3000,
-    },
-    {
-      id: "100002",
-      name: "Vlad",
-      surname: "Pitt",
-      outcome: 2000,
-    },
-    {
-      id: "100003",
-      name: "Bread",
-      surname: "Hleb",
-      outcome: 4000,
-    },
-    {
-      id: "100004",
-      name: "Harry",
-      surname: "Potter",
-      outcome: 5000,
-    },
-  ],
-};
-
-for (const key in IT_STEP_ACADEMY) {
-  const value = IT_STEP_ACADEMY[key];
-
-  switch (key) {
-    case "students":
-      extractData(value, "outcome");
-      break;
-    case "teachers":
-      extractData(value, "income");
-      break;
-
-    case "budget":
-      const outcome = extractData(IT_STEP_ACADEMY.students, "outcome");
-      const income = extractData(IT_STEP_ACADEMY.teachers, "income");
-      const prev_budget = IT_STEP_ACADEMY[key];
-
-      IT_STEP_ACADEMY.budget = outcome - income;
-      console.log(outcome - income);
-      console.log("[prev_budget]", prev_budget);
-      console.log("[actual_budget]", IT_STEP_ACADEMY.budget);
-      break;
-
-    default:
-      break;
-  }
-}
+  });
+});
+// 6. Side must be dark
+const side = document.getElementById("side");
+console.log(["find side"], side);
+side.style.background = "grey";
