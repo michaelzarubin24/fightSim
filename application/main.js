@@ -1,62 +1,83 @@
 "use strict";
 
-// 1. Find form---------------------------------------------------------------------------------------------
-let form = document.querySelector("form");
-console.log(["find form"], form);
+// ---------- Define the Hero class
+class Hero {
+  constructor(name, damage, hp) {
+    this.name = name;
+    this.damage = damage;
+    this.hp = hp;
+  }
 
-// 2. Print every child of form to console------------------------------------------------------------------
-let inputFirstName = document.getElementsByName("name")[0];
-console.log(["direct input call"], inputFirstName);
-const kekInput = document.getElementById("kek");
-console.log(["direct kekinput call"], kekInput);
-const select = document.querySelector("select");
-console.log(["direct select call"], select);
-const button = document.getElementById("btn");
-console.log(["direct button call"], button);
+  kick() {
+    return -23;
+  }
 
-// 3. Find inputs without direct calls----------------------------------------------------------------------
-console.log(["find using children"], form.children[0], form.children[1]);
+  skill() {
+    return -33;
+  }
+}
 
-// 4, 5, 7 Validation---------------------------------------------------------------------------------------
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("form");
-  const nameInput = document.querySelector('input[name="name"]');
-  const surnameInput = document.querySelector('input[name="surname"]');
+// ---------- Define the User class
+class User {
+  constructor(name, email, password) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevent the default form submission
+  getPassword() {
+    return this.password;
+  }
 
-    const nameValue = nameInput.value.trim();
-    const surnameValue = surnameInput.value.trim();
+  getName() {
+    return this.name;
+  }
 
-    if (nameValue.length > 4 && surnameValue.length > 5) {
-      // Validation successful
-      // nameInput.style.background && surnameInput.style.background = "lightblue"; ?????????????
-      nameInput.style.background = "lightblue";
-      surnameInput.style.background = "lightblue";
-      alert("Validation successful! Congratulations!");
-    } else {
-      // Validation failed
-      if (nameValue.length <= 4) {
-        nameInput.style.background = "red";
-        console.log(
-          ["Name validation failed"],
-          "Name must have more than 4 characters."
-        );
-        nameInput.focus();
-      }
-      if (surnameValue.length <= 5) {
-        surnameInput.style.background = "red";
-        console.log(
-          ["Surname validation failed"],
-          "Surname must have more than 5 characters."
-        );
-        surnameInput.focus();
-      }
-    }
-  });
-});
-// 6. Side must be dark
-const side = document.getElementById("side");
-console.log(["find side"], side);
-side.style.background = "grey";
+  getEmail() {
+    return this.email;
+  }
+}
+
+// ---------- Function to register and login user
+function registerAndLogin(name, email, password) {
+  const user = new User(name, email, password);
+  return user;
+}
+
+// ---------- Function for the fight
+function fight(user1, user2) {
+  const hero = new Hero("HeroName", 50, 100);
+
+  const user1Password = user1.getPassword();
+  const user2Name = user2.getName();
+
+  // ---------- Simulate a fight
+  const user1Score = hero.kick();
+  const user2Score = hero.skill();
+
+  const result = {
+    user1: {
+      name: user1.getName(),
+      email: user1.getEmail(),
+      password: user1Password,
+      score: user1Score,
+    },
+    user2: {
+      name: user2Name,
+      score: user2Score,
+    },
+  };
+
+  return result;
+}
+
+// ---------- Example
+const registeredUser = registerAndLogin(
+  "Michael",
+  "michael@gmail.com",
+  "password123"
+);
+const computerUser = new User("Computer", "computer@example.com", "comp123");
+
+const fightResult = fight(registeredUser, computerUser);
+console.log(fightResult);
